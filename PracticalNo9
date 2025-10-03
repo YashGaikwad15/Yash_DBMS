@@ -1,0 +1,185 @@
+Please enter a MongoDB connection string (Default: mongodb://localhost/): connect
+connect
+Current Mongosh Log ID: 68df9eaddb0217871ccebea3
+Connecting to:          mongodb://127.0.0.1:27017/connect?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.5.8
+Using MongoDB:          8.2.0
+Using Mongosh:          2.5.8
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2025-09-25T13:16:47.476+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+connect> usedemoexample
+ReferenceError: usedemoexample is not defined
+connect> usedemo
+ReferenceError: usedemo is not defined
+connect> show dbs;
+admin          80.00 KiB
+config         72.00 KiB
+cricket       212.00 KiB
+local          64.00 KiB
+mango;         64.00 KiB
+mongodsshell  144.00 KiB
+test          348.00 KiB
+connect> create demoexample;
+Uncaught:
+SyntaxError: Missing semicolon. (1:6)
+
+> 1 | create demoexample;
+    |       ^
+  2 |
+
+connect> create db.demoexample;
+Uncaught:
+SyntaxError: Missing semicolon. (1:6)
+
+> 1 | create db.demoexample;
+    |       ^
+  2 |
+
+connect> db.createCollection(Stud);
+ReferenceError: Stud is not defined
+connect> use test;
+switched to db test
+test> db.createCollection(Stud);
+ReferenceError: Stud is not defined
+test> show dbs;
+admin          80.00 KiB
+config        108.00 KiB
+cricket       212.00 KiB
+local          64.00 KiB
+mango;         64.00 KiB
+mongodsshell  144.00 KiB
+test          348.00 KiB
+test> use demoexample;
+switched to db demoexample
+demoexample> show dbs;
+admin          80.00 KiB
+config        108.00 KiB
+cricket       212.00 KiB
+local          64.00 KiB
+demoexample>
+mongodsshell  144.00 KiB
+test          348.00 KiB
+demoexample> db.createCollection('stud');
+{ ok: 1 }
+demoexample> db.stud.insertOne({rollno: 101});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68dfa160db0217871ccebea4')
+}
+demoexample> db.stud.find;
+[Function: find] AsyncFunction {
+  returnsPromise: true,
+  apiVersions: [ 1, Infinity ],
+  returnType: 'Cursor',
+  serverVersions: [ '0.0.0', '999.999.999' ],
+  topologies: [ 'ReplSet', 'Sharded', 'LoadBalanced', 'Standalone' ],
+  deprecated: false,
+  platforms: [ 'Compass', 'Browser', 'CLI' ],
+  isDirectShellCommand: false,
+  acceptsRawInput: false,
+  shellCommandCompleter: undefined,
+  newShellCommandCompleter: undefined,
+  help: [Function (anonymous)] Help
+}
+demoexample> db.stud.find();
+[ { _id: ObjectId('68dfa160db0217871ccebea4'), rollno: 101 } ]
+demoexample> db.stud.insertOne({name: "Yash"});
+{
+  acknowledged: true,
+  insertedId: ObjectId('68dfa22adb0217871ccebea5')
+}
+demoexample> db.stud.find();
+[
+  { _id: ObjectId('68dfa160db0217871ccebea4'), rollno: 101 },
+  { _id: ObjectId('68dfa22adb0217871ccebea5'), name: 'Yash' }
+]
+demoexample> db.remove({rollno: 101});
+TypeError: db.remove is not a function
+demoexample> db.stud.remove({rollno: 101});
+DeprecationWarning: Collection.remove() is deprecated. Use deleteOne, deleteMany, findOneAndDelete, or bulkWrite.
+{ acknowledged: true, deletedCount: 1 }
+demoexample> db.stud.find();
+[ { _id: ObjectId('68dfa22adb0217871ccebea5'), name: 'Yash' } ]
+demoexample> db.stud.remove({name:"Yash"});
+{ acknowledged: true, deletedCount: 1 }
+demoexample> db.stud.find();
+
+demoexample> db.stud.insert([{Rollno: 101,Name: "Yash",Address:"Nashik"},{Rollno: 102,Name:"Tanuja",Address:"Nashik"}]);
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('68dfa3c5db0217871ccebea6'),
+    '1': ObjectId('68dfa3c5db0217871ccebea7')
+  }
+}
+demoexample> db.stud.find();
+[
+  {
+    _id: ObjectId('68dfa3c5db0217871ccebea6'),
+    Rollno: 101,
+    Name: 'Yash',
+    Address: 'Nashik'
+  },
+  {
+    _id: ObjectId('68dfa3c5db0217871ccebea7'),
+    Rollno: 102,
+    Name: 'Tanuja',
+    Address: 'Nashik'
+  }
+]
+demoexample> db.stud.update({Rollno:101},{$set:{Name:"Yash Gaikwad"}});
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+demoexample> db.stud.find();
+[
+  {
+    _id: ObjectId('68dfa3c5db0217871ccebea6'),
+    Rollno: 101,
+    Name: 'Yash Gaikwad',
+    Address: 'Nashik'
+  },
+  {
+    _id: ObjectId('68dfa3c5db0217871ccebea7'),
+    Rollno: 102,
+    Name: 'Tanuja',
+    Address: 'Nashik'
+  }
+]
+demoexample> db.stud.update({Rollno:102},{$set:{Name:"Tanuja Nerkar"}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+demoexample>
+
+demoexample> db.stud.find();
+[
+  {
+    _id: ObjectId('68dfa3c5db0217871ccebea6'),
+    Rollno: 101,
+    Name: 'Yash Gaikwad',
+    Address: 'Nashik'
+  },
+  {
+    _id: ObjectId('68dfa3c5db0217871ccebea7'),
+    Rollno: 102,
+    Name: 'Tanuja Nerkar',
+    Address: 'Nashik'
+  }
+]
+demoexample>
